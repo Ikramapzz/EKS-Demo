@@ -7,11 +7,11 @@ pipeline {
   }
 
   environment {
-    DOCKERHUB_USER   = 'your-dockerhub-username'          // TODO: change me
+    DOCKERHUB_USER   = 'ikramapzz55'          // TODO: change me
     IMAGE_NAME       = "${DOCKERHUB_USER}/jenkins-eks-demo"
     IMAGE_TAG        = "${env.BUILD_NUMBER}"
     EKS_CLUSTER_NAME = 'my-eks-cluster'                    // TODO: change me
-    AWS_REGION       = 'us-east-1'                         // TODO: change me
+    AWS_REGION       = 'ap-south-1'                         // TODO: change me
     K8S_NAMESPACE    = 'demo'
   }
 
@@ -19,7 +19,8 @@ pipeline {
 
     stage('Checkout') {
       steps {
-        checkout scm
+        git branch: 'main',
+                    url: 'https://github.com/Ikramapzz/EKS-Demo.git'
       }
     }
 
@@ -41,7 +42,7 @@ pipeline {
 
     stage('Docker Build') {
       steps {
-        sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} -t ${IMAGE_NAME}:latest ."
+        sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
       }
     }
 
